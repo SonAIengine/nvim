@@ -586,8 +586,9 @@ return {
 
   --  nvim-autopairs [auto close brackets]
   --  https://github.com/windwp/nvim-autopairs
-  --  It's disabled by default, you can enable it with <space>ua
-  {
+  --  It's disabled by default, you can enable it with <spac
+  --
+{
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     opts = {
