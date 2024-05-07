@@ -157,6 +157,54 @@ function M.apply_user_lsp_settings(server_name)
     pcall(require, "neodev")
     opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
+  if server_name == "tailwindcss" then
+    opts.settings = {
+      tailwindCSS = {
+        lint = {
+          cssConflict = "warning",
+          invalidApply = "error",
+          invalidVariant = "error",
+          invalidScreen = "error",
+          invalidConfigPath = "error",
+          invalidTailwindDirective = "error",
+          recommendedVariantOrder = "warning",
+        },
+        validate = true
+      }
+    }
+  end
+  if server_name == "cssls" then
+    opts.settings = {
+      css = {
+        validate = true
+      }
+    }
+  end
+  if server_name == "tsserver" then
+    opts.settings = {
+      javascript = {
+        format = {
+          enable = true,
+        },
+        validate = true
+      },
+      typescript = {
+        format = {
+          enable = true,
+        },
+        validate = true
+      }
+    }
+    opts.filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" }
+    opts.on_attach = function(client, bufnr)
+      -- 비활성화하려는 클라이언트 측 기능을 설정합니다.
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
+      -- 버퍼 번호(bufnr)를 사용한 추가적인 설정이 가능합니다.
+      -- 예를 들어, 키 매핑이나 버퍼별 설정을 추가할 수 있습니다.
+    end
+  end
+
 
   -- Apply them
   local old_on_attach = server.on_attach
